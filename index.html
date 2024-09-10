@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBKCheeHutang</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #00008B, #000);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .method-button {
+            background-color: #00BFFF;
+            border: none;
+            color: white;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .method-button:hover {
+            background-color: #4682B4;
+        }
+
+        .icon-container {
+            margin-top: 20px;
+        }
+
+        .icon-container a {
+            margin: 0 10px;
+        }
+
+        .icon-container img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .bubble {
+            animation: bubble 0.5s ease-out forwards;
+        }
+
+        @keyframes bubble {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>MBKCheeHutang</h1>
+    <h2>Pilih Metode Pembayaran</h2>
+
+    <button class="method-button" id="cashBtn">Tunai</button>
+    <button class="method-button" id="transferBtn">Transfer</button>
+
+    <!-- Form Tunai -->
+    <div id="cashForm" class="hidden">
+        <h2>Form Hutang Tunai</h2>
+        <form id="cashDebtForm">
+            <label>Nama: <input type="text" id="cashName" required></label><br><br>
+            <label>Nomor Telepon: <input type="tel" id="cashPhone" required></label><br><br>
+            <label>Alamat: <input type="text" id="cashAddress" required></label><br><br>
+            <label>Nominal Hutang: <input type="number" id="cashAmount" required></label><br><br>
+            <label>Tanggal Hutang: <input type="date" id="cashDebtDate" required></label><br><br>
+            <label>Tanggal Pembayaran: <input type="date" id="cashPayDate" required></label><br><br>
+            <button type="button" class="method-button" onclick="submitCash()">Submit</button>
+        </form>
+    </div>
+
+    <!-- Form Transfer -->
+    <div id="transferForm" class="hidden">
+        <h2>Form Hutang Transfer</h2>
+        <form id="transferDebtForm">
+            <label>Nama: <input type="text" id="transferName" required></label><br><br>
+            <label>Nomor Telepon: <input type="tel" id="transferPhone" required></label><br><br>
+            <label>Alamat: <input type="text" id="transferAddress" required></label><br><br>
+            <label>Tanggal Hutang: <input type="date" id="transferDebtDate" required></label><br><br>
+            <label>Tanggal Pembayaran: <input type="date" id="transferPayDate" required></label><br><br>
+            <button type="button" class="method-button" onclick="submitTransfer()">Minta Izin Transfer</button>
+        </form>
+    </div>
+
+    <div id="cashSummary" class="hidden"></div>
+    <div id="transferSummary" class="hidden"></div>
+
+    <!-- Social Media Icons -->
+    <div class="icon-container">
+        <a href="https://wa.me/895334816800" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+        <a href="https://www.tiktok.com/@mbakcheeutang?_t=8pbS1KlKhLr&_r=1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Tiktok-logo.svg" alt="TikTok"></a>
+        <a href="https://youtube.com/@mbakchee_?si=37luG9UwxfGj8ntL" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube"></a>
+        <a href="https://www.instagram.com/mbakcheeutang_?igsh=aTBxNzUwcnU1cW95" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/profile.php?id=100086166318312&mibextid=ZbWKwL" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" alt="Facebook"></a>
+        <a href="https://saweria.co/mbakcheeutang" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Money_icon.svg" alt="Saweria"></a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('cashBtn').addEventListener('click', function() {
+        const cashBtn = document.getElementById('cashBtn');
+        cashBtn.classList.add('bubble');
+        setTimeout(() => {
+            cashBtn.classList.remove('bubble');
+            document.getElementById('cashForm').classList.remove('hidden');
+            document.getElementById('transferForm').classList.add('hidden');
+        }, 500);
+    });
+
+    document.getElementById('transferBtn').addEventListener('click', function() {
+        document.getElementById('cashForm').classList.add('hidden');
+        document.getElementById('transferForm').classList.remove('hidden');
+    });
+
+    function submitCash() {
+        const name = document.getElementById('cashName').value;
+        const phone = document.getElementById('cashPhone').value;
+        const address = document.getElementById('cashAddress').value;
+        const amount = document.getElementById('cashAmount').value;
+        const debtDate = document.getElementById('cashDebtDate').value;
+        const payDate = document.getElementById('cashPayDate').value;
+
+        const summary = `
+            <h2>Detail Hutang Tunai</h2>
+            <p>Nama: ${name}</p>
+            <p>Nomor Telepon: ${phone}</p>
+            <p>Alamat: ${address}</p>
+            <p>Total Hutang: Rp${amount}</p>
+            <p>Tanggal Hutang: ${debtDate}</p>
+            <p>Tanggal Pembayaran: ${payDate}</p>
+            <button class="method-button" onclick="goBack()">Kembali ke Halaman Utama</button>
+        `;
+
+        document.getElementById('cashSummary').innerHTML = summary;
+        document.getElementById('cashSummary').classList.remove('hidden');
+        document.getElementById('cashForm').classList.add('hidden');
+    }
+
+    function submitTransfer() {
+        const name = document.getElementById('transferName').value;
+        const phone = document.getElementById('transferPhone').value;
+        const address = document.getElementById('transferAddress').value;
+        const debtDate = document.getElementById('transferDebtDate').value;
+        const payDate = document.getElementById('transferPayDate').value;
+
+        alert('Minta izin kepada pemilik sebelum melakukan transfer.');
+
+        const summary = `
+            <h2>Transfer Berhasil</h2>
+            <p>Nama: ${name}</p>
+            <p>Nomor Telepon: ${phone}</p>
+            <p>Alamat: ${address}</p>
+            <p>Tanggal Hutang: ${debtDate}</p>
+            <p>Tanggal Pembayaran: ${payDate}</p>
+            <button class="method-button" onclick="goBack()">Kembali ke Halaman Utama</button>
+        `;
+
+        document.getElementById('transferSummary').innerHTML = summary;
+        document.getElementById('transferSummary').classList.remove('hidden');
+        document.getElementById('transferForm').classList.add('hidden');
+    }
+
+    function goBack() {
+        document.getElementById('cashForm').classList.add('hidden');
+        document.getElementById('cashSummary').classList.add('hidden');
+        document.getElementById('transferForm').classList.add('hidden');
+        document.getElementById('transferSummary').classList.add('hidden');
+    }
+</script>
+
+</body>
+</html>
